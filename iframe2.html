@@ -1,0 +1,42 @@
+<!--
+ * @Author: haorongzheng
+ * @Date: 2022-01-07 12:57:50
+ * @LastEditTime: 2022-01-07 12:58:53
+ * @LastEditors: haorongzheng
+ * @Description: 
+ * @FilePath: /iframe-signal/iframe2.html
+ * 保佑代码永无bug
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        window.onload = function() {
+          function test(e) {
+            try {
+              const data = e.data;
+              if(data && data.type==="get") {
+                self.parent.postMessage( {
+                  type: "response",
+                  value: "2222",
+                },
+                "*")
+              }
+            }catch (e) {
+              console.log(e);
+            }
+          }
+          self.addEventListener(
+          "message",
+          test,
+          false);
+        }
+      </script>
+</body>
+</html>

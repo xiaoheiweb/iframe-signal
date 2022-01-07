@@ -1,0 +1,47 @@
+<!--
+ * @Author: haorongzheng
+ * @Date: 2022-01-07 12:56:03
+ * @LastEditTime: 2022-01-07 13:00:39
+ * @LastEditors: haorongzheng
+ * @Description: 
+ * @FilePath: /iframe-signal/iframe1.html
+ * 保佑代码永无bug
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const iframe2Local = "http://xxx"; // 嵌入iframe地址
+        window.onload = function () {
+      const iframe = document.createElement('iframe');
+      iframe.src = iframe2Local;
+      iframe.style.display ="none";
+      iframe.onload = function () {
+        //  在页面加载完成后主页面向iframe发送请求
+          window.frames[0].postMessage(
+            {
+              type:'get',
+              value:"1111"
+            },
+            iframe2Local
+          );
+
+          // 主页面监听message事件,
+          window.addEventListener('message', function(e){
+              var data = e.data;
+              if((typeof data =="object") && data.type==="response") {
+                // localStorage.setItem("test",data.value);
+              }
+          }, false);
+         
+      }
+      document.body.appendChild(iframe);
+    </script>
+</body>
+</html>
